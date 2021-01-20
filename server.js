@@ -14,8 +14,7 @@ app.use((request, respond, next) =>{
 
 let db;
 MongoClient.connect('mongodb+srv://hk698:hk3270343900@cluster0.1jaim.mongodb.net/IndividualWork2?retryWrites=true&w=majority', (error, client) => {
- if (error) return console.log("wth")
-db = client.db('IndividualWork2')
+    db = client.db('IndividualWork2')
 });
 
 app.get('/lessons', (request, respond, next) => {
@@ -44,7 +43,6 @@ app.put('/update/:id', (request, respond, next) => {
        }
     )
 });
-
 
 app.use((request, respond) => {
     res.status(404).json({
