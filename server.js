@@ -15,4 +15,12 @@ MongoClient.connect('mongodb+srv://hk698:hk3270343900@cluster0.1jaim.mongodb.net
 db = client.db('IndividualWork2')
 });
 
+app.get('/lessons', (request, respond, next) => {
+    db.collection('lessons').find({}).toArray((error, results) => {
+            if (error) return next();
+            respond.json(results);
+    });
+});
+
+
 app.listen(3000);
