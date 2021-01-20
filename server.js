@@ -9,4 +9,10 @@ app.use((request, respond, next) =>{
     next();
 })
 
+let db;
+MongoClient.connect('mongodb+srv://hk698:hk3270343900@cluster0.1jaim.mongodb.net/IndividualWork2?retryWrites=true&w=majority', (error, client) => {
+ if (error) return console.log("wth")
+db = client.db('IndividualWork2')
+});
+
 app.listen(3000);
