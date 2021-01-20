@@ -22,5 +22,12 @@ app.get('/lessons', (request, respond, next) => {
     });
 });
 
+app.post('/order', (request, respond, next) => {
+    db.collection('orders').insert(request.body, (error, results) => {
+        if (error) return next();
+        respond.send(results.ops);
+    });
+});
+
 
 app.listen(3000);
