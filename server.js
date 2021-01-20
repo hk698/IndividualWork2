@@ -1,8 +1,11 @@
 const express = require("express");
 const path = require("path");
 const MongoClient = require('mongodb').MongoClient;
+const ObjectID = require('mongodb').ObjectID;
 
 const app = express();
+app.use(express.json());
+
 
 app.use((request, respond, next) =>{
     console.log(request.url);
@@ -27,6 +30,26 @@ app.post('/order', (request, respond, next) => {
         if (error) return next();
         respond.send(results.ops);
     });
+});
+
+app.put('/update/:id', (request, respond, next) => {
+   
+    db.collection('lessons').update(
+        { _id: new ObjectID(request.params.id) },
+        { $set: request.body },
+        { safe: true, multi: false },
+       (error, result) => {
+           if (error) return next();
+           respond.json({'message': 'all good'})
+       }
+    )
+});
+
+
+app.use((request, respond) => {
+    res.status(404).json({
+        'error': true,
+        'message': 'An error has occured'});
 });
 
 
