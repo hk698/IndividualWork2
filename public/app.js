@@ -3,7 +3,7 @@ let app = new Vue({
     data: {
         sitename: 'After School Classes',
         task: 'Please select a lesson',
-        lessons: lessons,
+        lessons: [],
         cart:[],
         sortByArray:['subject','location', 'price', 'availableSpaces'],
         selectBy: 'subject',
@@ -55,6 +55,12 @@ let app = new Vue({
         checkoutFinish(){
             this.cart = [];
             this.showMessage = true;
+        },
+        accessLessons(){
+            fetch('/lessons')
+                .then(response => response.json())
+                .then(data => this.lessons = data)
+                .catch(error => console.log(error));
         }
     },
     computed:{
@@ -102,11 +108,9 @@ let app = new Vue({
             }
             return false;
         },
-
-    
-
-    
-
         
+    },
+    mounted(){
+        this.accessLessons();
     }
 })
