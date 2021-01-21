@@ -2,15 +2,16 @@ const express = require("express");
 const path = require("path");
 const MongoClient = require('mongodb').MongoClient;
 const ObjectID = require('mongodb').ObjectID;
+const cors = reuqire('cors');
 
 
 const app = express();
 app.use(express.json());
 
-
+app.use(cors());
 app.use((request, respond, next) =>{
-    respond.header("Access-Control-Allow-Origin", "*");
-    respond.header("Access-Control-Allow-Headers", "*");
+    // respond.header("Access-Control-Allow-Origin", "*");
+    // respond.header("Access-Control-Allow-Headers", "*");
     console.log(request.url);
     next();
 })
