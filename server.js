@@ -48,7 +48,7 @@ app.put('/update/:id', (request, respond, next) => {
 });
 
 app.use((request, respond) => {
-    res.status(404).json({
+    respond.status(404).json({
         'error': true,
         'message': 'An error has occured'});
 });
