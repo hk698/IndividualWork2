@@ -3,6 +3,7 @@ const path = require("path");
 const MongoClient = require('mongodb').MongoClient;
 const ObjectID = require('mongodb').ObjectID;
 const cors = require('cors');
+const fs = require('fs');
 
 
 const app = express();
@@ -10,8 +11,6 @@ app.use(express.json());
 
 app.use(cors());
 app.use((request, respond, next) =>{
-    // respond.header("Access-Control-Allow-Origin", "*");
-    // respond.header("Access-Control-Allow-Headers", "*");
     console.log(request.url);
     next();
 })
@@ -47,6 +46,17 @@ app.put('/update/:id', (request, respond, next) => {
            respond.json({'message': 'all good'})
        }
     )
+});
+
+app.use(function(req, res, next) {
+    var filePath = path.join(__dirname, "static", req.url);
+    fs.stat(filePath, function(err, fileInfo) {
+        if (err) {
+            next();
+return; }
+        if (fileInfo.isFile()) res.sendFile(filePath);
+        else next();
+    });
 });
 
 app.use((request, respond) => {
