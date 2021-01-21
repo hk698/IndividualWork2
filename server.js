@@ -2,7 +2,7 @@ const express = require("express");
 const path = require("path");
 const MongoClient = require('mongodb').MongoClient;
 const ObjectID = require('mongodb').ObjectID;
-const port = process.env.PORT || 3000;
+
 
 const app = express();
 app.use(express.json());
@@ -17,6 +17,7 @@ app.use((request, respond, next) =>{
 
 let db;
 MongoClient.connect('mongodb+srv://hk698:hk3270343900@cluster0.1jaim.mongodb.net/', (error, client) => {
+    if (error) console.log(error)
     db = client.db('IndividualWork2')
 });
 
@@ -53,4 +54,5 @@ app.use((request, respond) => {
         'message': 'An error has occured'});
 });
 
+const port = process.env.PORT || 3000;
 app.listen(port);
