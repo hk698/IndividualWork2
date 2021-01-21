@@ -9,8 +9,8 @@ app.use(express.json());
 
 
 app.use((request, respond, next) =>{
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Headers", "*");
+    respond.header("Access-Control-Allow-Origin", "*");
+    respond.header("Access-Control-Allow-Headers", "*");
     console.log(request.url);
     next();
 })
