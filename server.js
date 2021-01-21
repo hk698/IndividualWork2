@@ -7,13 +7,10 @@ const port = process.env.PORT || 3000;
 const app = express();
 app.use(express.json());
 
-app.use(function(req, res, next) {
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Headers", "*");
-    next();
-});
 
 app.use((request, respond, next) =>{
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "*");
     console.log(request.url);
     next();
 })
@@ -50,16 +47,10 @@ app.put('/update/:id', (request, respond, next) => {
     )
 });
 
-
-let publicPath = path.resolve(__dirname, 'public');
-app.use(express.static(publicPath));
-
 app.use((request, respond) => {
     res.status(404).json({
         'error': true,
         'message': 'An error has occured'});
 });
-
-
 
 app.listen(port);
