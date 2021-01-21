@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>After school classes</title>
+    <script src="https://unpkg.com/vue"></script>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
+</head>
+<body>
+    
+
+<div id="app">
+
+    <nav>
+         {{sitename}}
+    </nav>
+
+    
+    <main v-if="!showCartPage">
+        <div class="sortBy" >
+                <div class="stickyBar"> 
+                        <button v-show="cartButtonVisible" @click="showCartPage = true">{{noCartItems}} <i class="fas fa-shopping-cart"></i></button> 
+                           
+                    <div class="order"> Sort By: 
+                        <div v-for="item in sortByArray">
+                            <input name="sortBy" type="radio"  v-bind:value="item" v-model="selectBy"> 
+                            <label for="sortBy">{{item}}</label>
+                        </div> 
+                    </div>
+                    <div class="order"> Order By: 
+                        <div v-for="item in orderByArray">
+                            <input name="OrderBy" type="radio"  v-bind:value="item" v-model="selectOrder"> 
+                            <label for="OrderBy">{{item}}</label>
+                        </div>
+                    </div>
+                </div>  
+        </div>
+        <div class="lessonList">
+            <div class="lessonWrap" v-for="lesson in sortLessons">
+                <div class="lesson" >
+                    <div class="image" v-bind:style="{'background-image': 'url(' + lesson.image +')'}">
+                    
+                    </div>
+                    <div class="lessonInfo">
+                        <h2 class="lessonName">{{lesson.subject}}</h2>
+                        <div class="spaces">Spaces Left: {{lesson.availableSpaces}}</div>
+                        <div class="location">{{lesson.location}}</div>
+                        <div class="price">£{{lesson.price}}</div>
+                        <button v-on:click="addToCart(lesson)" :disabled="anySpacesLeft(lesson)">Add to cart</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </main>
+    
+        <div v-else>            
+            <button @click="showCartPage = false; showMessage = false">Back</button>
+                <div  class="cartContainer" v-if="!showMessage">
+                
+                    <div class="cartSummary">    
+                        <ul>
+                            <li v-for="(elem, index) in cart">{{ elem.lesson.subject }} {{elem.noOfItem}} <button v-on:click="removeElemFromCart(index)">Remove</button> </li>
+                        </ul>  
+                        <hr style="width:30%;text-align:left;margin-left:0"> 
+                        <h2 id="total">Total £ {{getTotalPrice}}</h2>
+                    </div>  
+                    <div id="checkoutId">
+                        Payment details:
+                        <div class="inputName">
+                               <div> Name: </div>
+                                <input type="text" name="" :placeholder="[[placeholder]]" v-model="checkout.name">
+                        </div>  
+                        <div class="inputNumber">         
+                            <div>   Number: </div> 
+                                <input type="text" name="" :placeholder="[[placeholder2]]" v-model="checkout.number">
+                        </div>        
+                                <button class="checkoutButton" :disabled="!validCheckout || !noCartItems" @click="checkoutFinish">Checkout</button>
+                    
+                    </div> 
+                </div>
+                <div v-else>
+                    <h3>Checkout has been successfully completed</h3> 
+                </div>
+        </div>
+
+
+</div>
+
+<script src="lesson.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

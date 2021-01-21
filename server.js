@@ -44,6 +44,10 @@ app.put('/update/:id', (request, respond, next) => {
     )
 });
 
+
+let publicPath = path.resolve(__dirname, 'public');
+app.use(express.static(publicPath));
+
 app.use((request, respond) => {
     res.status(404).json({
         'error': true,
@@ -51,4 +55,5 @@ app.use((request, respond) => {
 });
 
 
-app.listen(3000);
+
+app.listen(8000);
