@@ -16,7 +16,7 @@ app.use((request, respond, next) =>{
 })
 
 let db;
-MongoClient.connect('mongodb+srv://hk698:hk3270343900@cluster0.1jaim.mongodb.net/IndividualWork2?retryWrites=true&w=majority', (error, client) => {
+MongoClient.connect('mongodb+srv://hk698:hk3270343900@cluster0.1jaim.mongodb.net/', (error, client) => {
     db = client.db('IndividualWork2')
 });
 
