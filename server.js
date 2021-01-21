@@ -2,6 +2,7 @@ const express = require("express");
 const path = require("path");
 const MongoClient = require('mongodb').MongoClient;
 const ObjectID = require('mongodb').ObjectID;
+const port = process.env.PORT || 3000
 
 const app = express();
 app.use(express.json());
@@ -56,4 +57,4 @@ app.use((request, respond) => {
 
 
 
-app.listen(8000);
+app.listen(port);

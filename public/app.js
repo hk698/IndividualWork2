@@ -53,11 +53,51 @@ let app = new Vue({
         },
         
         checkoutFinish(){
+
+            this.cart.forEach(item => {
+
+                let body = {
+                    "name": this.checkout.name,
+                    "phone": this.checkout.number,
+                    "lessonID": item.lesson._id,
+                    "noOfItem": item.noOfItem
+                };
+                this.newOrder(body);
+                this.updateAvailableSpaces(item);
+
+            });
+
             this.cart = [];
             this.showMessage = true;
         },
+        newOrder(order) {
+
+            fetch('https://individialwork2.herokuapp.com/order', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(order)
+            }).then(response => response.json())
+            .then(data => { return data }).catch(error => { return data});
+
+        },
+        updateAvailableSpaces(item) {
+
+            fetch(`https://individialwork2.herokuapp.com/update/${item.lesson._id}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    availableSpaces: item.lesson.availableSpaces
+                })
+            }).then(response => response.json())
+            .then(data => { return data }).catch(error => { return data});
+
+        },
         accessLessons(){
-            fetch('/lessons')
+            fetch('https://individialwork2.herokuapp.com/lessons')
                 .then(response => response.json())
                 .then(data => this.lessons = data)
                 .catch(error => console.log(error));
